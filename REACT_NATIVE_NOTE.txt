@@ -1,0 +1,14 @@
+// tutorial
+https://youtu.be/OujKTHxYLcU
+
+https://youtu.be/LWs6dY92_MU
+
+// Install(EXPO)
+
+https://reactnative.dev/docs/environment-setup
+
+https://blog.codemagic.io/step-by-step-guide-to-kick-off-your-first-react-native-project/
+
+// start using expo or  vysor
+
+https://www.vysor.io/
