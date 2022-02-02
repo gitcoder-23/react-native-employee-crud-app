@@ -18,6 +18,10 @@ https://unsplash.com/photos/n4KewLKFOZw
 
 https://reactnative.dev/docs/scrollview
 
+# To Make gradient
+
+https://docs.expo.dev/versions/latest/sdk/linear-gradient/
+
 #
 
 start -> 10

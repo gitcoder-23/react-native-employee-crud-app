@@ -3,13 +3,15 @@ import Constants from 'expo-constants';
 import { StyleSheet, View } from 'react-native';
 import Home from './screens/Home';
 import CreateEmployee from './screens/CreateEmployee';
+import Profile from './screens/Profile';
 
 export default function App() {
   return (
     <View style={styles.container}>
       {/* <Text>on your app!</Text> */}
       {/* <Home /> */}
-      <CreateEmployee />
+      {/* <CreateEmployee /> */}
+      <Profile />
       <StatusBar style="auto" />
     </View>
   );
