@@ -1,10 +1,17 @@
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, Linking, Platform } from 'react-native';
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Title, Card, Button } from 'react-native-paper';
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
 
 const Profile = () => {
+  const openDial = () => {
+    if (Platform.OS === 'android') {
+      Linking.openURL('tel: 9857485714');
+    } else {
+      Linking.openURL('telprompt: 9857485714');
+    }
+  };
   return (
     <>
       <View style={styles.root}>
@@ -29,13 +36,18 @@ const Profile = () => {
           <Title>Rahul Verma</Title>
           <Text style={styles.myUpText}>Software Developer</Text>
         </View>
-        <Card style={styles.myCard}>
+        <Card
+          style={styles.myCard}
+          onPress={() => {
+            Linking.openURL('mailto: rahul@yahoo.com');
+          }}
+        >
           <View style={styles.cardContent}>
             <MaterialIcons name="email" size={32} color="#006aff" />
             <Text style={styles.myText}>rahul@yahoo.com</Text>
           </View>
         </Card>
-        <Card style={styles.myCard}>
+        <Card style={styles.myCard} onPress={() => openDial()}>
           <View style={styles.cardContent}>
             <Entypo name="phone" size={32} color="#006aff" />
             <Text style={styles.myText}>9857485714</Text>
