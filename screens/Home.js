@@ -8,68 +8,73 @@ const Home = (props) => {
     {
       id: 1,
       name: 'Mark',
+      email: 'mark@yahoo.com',
+      phone: '8757474758',
+      salary: '8LPA',
+      picture:
+        'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1760&q=80',
       position: 'Software Developer',
     },
     {
       id: 2,
       name: 'Huge',
+      email: 'huge@yahoo.com',
+      phone: '7757474758',
+      salary: '9LPA',
+      picture:
+        'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
       position: 'Web Developer',
     },
     {
       id: 3,
       name: 'Lara',
+      email: 'lara@yahoo.com',
+      phone: '9757474758',
+      salary: '10LPA',
+      picture:
+        'https://images.unsplash.com/photo-1628157588553-5eeea00af15c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
       position: 'UI Developer',
     },
     {
       id: 4,
       name: 'Manderin',
+      email: 'manderin@yahoo.com',
+      phone: '7557474758',
+      salary: '8LPA',
+      picture:
+        'https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
       position: 'UX Developer',
     },
     {
       id: 5,
-      name: 'Manderin',
-      position: 'UX Developer',
+      name: 'Subhash',
+      email: 'subhash@yahoo.com',
+      phone: '9557474758',
+      salary: '16LPA',
+      picture:
+        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
+      position: 'QA Analyst',
     },
     {
       id: 6,
-      name: 'Manderin',
-      position: 'UX Developer',
+      name: 'Prabha',
+      email: 'prabha@yahoo.com',
+      phone: '6557474758',
+      salary: '15LPA',
+      picture:
+        'https://images.unsplash.com/photo-1499887142886-791eca5918cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
+      position: 'UI Developer',
     },
     {
       id: 7,
-      name: 'Manderin',
-      position: 'UX Developer',
+      name: 'Prity',
+      email: 'prity@yahoo.com',
+      phone: '4557474758',
+      salary: '20LPA',
+      picture:
+        'https://images.unsplash.com/photo-1586297135537-94bc9ba060aa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
+      position: 'DevOps',
     },
-    // {
-    //   id: 8,
-    //   name: 'Manderin',
-    //   position: 'UX Developer',
-    // },
-    // {
-    //   id: 9,
-    //   name: 'Manderin',
-    //   position: 'UX Developer',
-    // },
-    // {
-    //   id: 10,
-    //   name: 'Manderin',
-    //   position: 'UX Developer',
-    // },
-    // {
-    //   id: 11,
-    //   name: 'Manderin',
-    //   position: 'UX Developer',
-    // },
-    // {
-    //   id: 12,
-    //   name: 'Manderin',
-    //   position: 'UX Developer',
-    // },
-    // {
-    //   id: 13,
-    //   name: 'Manderin',
-    //   position: 'UX Developer',
-    // },
   ];
 
   // const renderList = dummyData.reverse().map((item) => {
@@ -98,7 +103,8 @@ const Home = (props) => {
       <>
         <Card
           style={styles.myCard}
-          onPress={() => props.navigation.navigate('Profile')}
+          // props pass here ase "item"
+          onPress={() => props.navigation.navigate('Profile', { item: item })}
         >
           <View style={styles.cardView}>
             <Image
@@ -127,7 +133,8 @@ const Home = (props) => {
           // console.log('dummyData->', item)
           return renderList(item);
         }}
-        keyExtractor={(item) => `${item.id}`}
+        keyExtractor={(item) => item.id}
+        // keyExtractor={(item) => `${item.id}`}
       />
       <FAB
         onPress={() => props.navigation.navigate('Create')}

@@ -1,20 +1,23 @@
+/* eslint-disable react/prop-types */
 import { StyleSheet, Text, View, Image, Linking, Platform } from 'react-native';
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Title, Card, Button } from 'react-native-paper';
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
 
-const Profile = () => {
+const Profile = (props) => {
+  const { id, name, email, picture, phone, salary, position } =
+    props.route.params.item;
   const openDial = () => {
     if (Platform.OS === 'android') {
-      Linking.openURL('tel: 9857485714');
+      Linking.openURL(`tel: ${phone}`);
     } else {
-      Linking.openURL('telprompt: 9857485714');
+      Linking.openURL(`telprompt: ${phone}`);
     }
   };
   return (
     <>
-      <View style={styles.root}>
+      <View style={styles.root} key={id}>
         <LinearGradient
           colors={['#0033ff', '#6bc1ff']}
           style={{ height: '20%' }}
@@ -28,35 +31,35 @@ const Profile = () => {
               marginTop: -50,
             }}
             source={{
-              uri: 'https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
+              uri: `${picture}`,
             }}
           />
         </View>
         <View style={styles.empName}>
-          <Title>Rahul Verma</Title>
-          <Text style={styles.myUpText}>Software Developer</Text>
+          <Title>{name}</Title>
+          <Text style={styles.myUpText}>{position}</Text>
         </View>
         <Card
           style={styles.myCard}
           onPress={() => {
-            Linking.openURL('mailto: rahul@yahoo.com');
+            Linking.openURL(`mailto: ${email}`);
           }}
         >
           <View style={styles.cardContent}>
             <MaterialIcons name="email" size={32} color="#006aff" />
-            <Text style={styles.myText}>rahul@yahoo.com</Text>
+            <Text style={styles.myText}>{email}</Text>
           </View>
         </Card>
         <Card style={styles.myCard} onPress={() => openDial()}>
           <View style={styles.cardContent}>
             <Entypo name="phone" size={32} color="#006aff" />
-            <Text style={styles.myText}>9857485714</Text>
+            <Text style={styles.myText}>{phone}</Text>
           </View>
         </Card>
         <Card style={styles.myCard}>
           <View style={styles.cardContent}>
             <MaterialIcons name="attach-money" size={32} color="#006aff" />
-            <Text style={styles.myText}>8LPA</Text>
+            <Text style={styles.myText}>{salary}</Text>
           </View>
         </Card>
         <View style={styles.myButton}>
