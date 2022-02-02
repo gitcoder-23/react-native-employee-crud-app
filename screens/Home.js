@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import { StyleSheet, Text, Image, View, FlatList } from 'react-native';
 import React from 'react';
 import { Card, FAB } from 'react-native-paper';
 
-const Home = () => {
+const Home = (props) => {
   const dummyData = [
     {
       id: 1,
@@ -39,36 +40,36 @@ const Home = () => {
       name: 'Manderin',
       position: 'UX Developer',
     },
-    {
-      id: 8,
-      name: 'Manderin',
-      position: 'UX Developer',
-    },
-    {
-      id: 9,
-      name: 'Manderin',
-      position: 'UX Developer',
-    },
-    {
-      id: 10,
-      name: 'Manderin',
-      position: 'UX Developer',
-    },
-    {
-      id: 11,
-      name: 'Manderin',
-      position: 'UX Developer',
-    },
-    {
-      id: 12,
-      name: 'Manderin',
-      position: 'UX Developer',
-    },
-    {
-      id: 13,
-      name: 'Manderin',
-      position: 'UX Developer',
-    },
+    // {
+    //   id: 8,
+    //   name: 'Manderin',
+    //   position: 'UX Developer',
+    // },
+    // {
+    //   id: 9,
+    //   name: 'Manderin',
+    //   position: 'UX Developer',
+    // },
+    // {
+    //   id: 10,
+    //   name: 'Manderin',
+    //   position: 'UX Developer',
+    // },
+    // {
+    //   id: 11,
+    //   name: 'Manderin',
+    //   position: 'UX Developer',
+    // },
+    // {
+    //   id: 12,
+    //   name: 'Manderin',
+    //   position: 'UX Developer',
+    // },
+    // {
+    //   id: 13,
+    //   name: 'Manderin',
+    //   position: 'UX Developer',
+    // },
   ];
 
   // const renderList = dummyData.reverse().map((item) => {
@@ -95,7 +96,10 @@ const Home = () => {
   const renderList = (item) => {
     return (
       <>
-        <Card style={styles.myCard} key={item.id}>
+        <Card
+          style={styles.myCard}
+          onPress={() => props.navigation.navigate('Profile')}
+        >
           <View style={styles.cardView}>
             <Image
               style={{ width: 60, height: 60, borderRadius: 60 / 2 }}
@@ -113,7 +117,7 @@ const Home = () => {
     );
   };
   return (
-    <View>
+    <View style={styles.root}>
       {/* {renderList} */}
       {/* it provides scrollview */}
       <FlatList
@@ -126,6 +130,7 @@ const Home = () => {
         keyExtractor={(item) => `${item.id}`}
       />
       <FAB
+        onPress={() => props.navigation.navigate('Create')}
         style={styles.fab}
         small={false}
         icon="plus"
@@ -134,7 +139,7 @@ const Home = () => {
             accent: '#006aff',
           },
         }}
-        onPress={() => console.log('Pressed')}
+        // onPress={() => console.log('Pressed', props)}
       />
     </View>
   );
@@ -143,6 +148,9 @@ const Home = () => {
 export default Home;
 // for error checking
 const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
   myCard: {
     margin: 5,
     // padding: 5,

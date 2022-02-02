@@ -11,7 +11,7 @@ const CreateEmployee = () => {
   const [modal, setModal] = useState(false);
   return (
     <View style={styles.root}>
-      <Text>Create Employee</Text>
+      {/* <Text>Create Employee</Text> */}
       <TextInput
         label="Name"
         mode="outlined"
