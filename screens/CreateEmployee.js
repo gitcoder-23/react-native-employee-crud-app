@@ -1,6 +1,8 @@
-import { StyleSheet, Text, View, Modal } from 'react-native';
+import { StyleSheet, Text, View, Modal, Alert, Image } from 'react-native';
 import React, { useState } from 'react';
 import { TextInput, Button } from 'react-native-paper';
+import * as ImagePicker from 'expo-image-picker';
+// import * as Permissions from 'expo-Permissions';
 
 const CreateEmployee = () => {
   const [name, setName] = useState('');
@@ -9,6 +11,69 @@ const CreateEmployee = () => {
   const [salary, setSalary] = useState('');
   const [picture, setPicture] = useState('');
   const [modal, setModal] = useState(false);
+  const [image, setImage] = useState(null);
+  const pickFromGalary = async () => {
+    // const { granted } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    // const [status] = ImagePicker.useMediaLibraryPermissions(null);
+    // if (status) {
+    //   let data = await ImagePicker.launchImageLibraryAsync({
+    //     mediaTypes: ImagePicker.MediaTypeOptions.All,
+    //     allowsEditing: true,
+    //     aspect: [1, 1],
+    //     // 0-1
+    //     quality: 1,
+    //   });
+    //   console.log('pickFromGalary', data);
+    // } else {
+    //   Alert.alert('You need to give up permission to work');
+    // }
+    console.log('Galary');
+    let result = await ImagePicker.launchImageLibraryAsync({
+      // All insteed of images
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      // aspect: [4, 3],
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
+  const pickFromCamera = async () => {
+    // const { granted } = await Permissions.askAsync(Permissions.CAMERA);
+    // const [status] = ImagePicker.useCameraPermissions(null);
+    // if (status) {
+    //   let data = await ImagePicker.launchCameraAsync({
+    //     mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    //     allowsEditing: true,
+    //     aspect: [1, 1],
+    //     // 0-1
+    //     quality: 0.5,
+    //   });
+    //   console.log('pickFromCamera', data);
+    // } else {
+    //   Alert.alert('You need to give up permission to work');
+    // }
+    console.log('Camera');
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      // aspect: [4, 3],
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    console.log(result);
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
   return (
     <View style={styles.root}>
       {/* <Text>Create Employee</Text> */}
@@ -45,6 +110,17 @@ const CreateEmployee = () => {
         value={salary}
         onChangeText={(text) => setSalary(text)}
       />
+
+      {image && (
+        <Image
+          source={{ uri: image }}
+          style={{
+            width: 80,
+            height: 80,
+            borderRadius: 80 / 2,
+          }}
+        />
+      )}
       <Button
         icon="upload"
         style={styles.importStyle}
@@ -85,10 +161,7 @@ const CreateEmployee = () => {
               icon="camera"
               mode="contained"
               theme={theme}
-              onPress={() => {
-                console.log('C-Pressed');
-                // setModal(false);
-              }}
+              onPress={pickFromCamera}
             >
               Camera
             </Button>
@@ -96,10 +169,7 @@ const CreateEmployee = () => {
               icon="image-area"
               mode="contained"
               theme={theme}
-              onPress={() => {
-                console.log('G-Pressed');
-                // setModal(false);
-              }}
+              onPress={pickFromGalary}
             >
               Gallery
             </Button>

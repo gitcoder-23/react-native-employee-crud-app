@@ -49,6 +49,18 @@ react-native-gesture-handler
 @react-native-masked-view/masked-view
 @react-navigation/native-stack
 
+# For image picking
+
+https://docs.expo.dev/versions/latest/sdk/imagepicker/
+
 #
 
-start -> 10
+expo install expo-image-picker
+
+# link
+
+https://docs.expo.dev/versions/v44.0.0/sdk/imagepicker/
+
+#
+
+start -> 17
