@@ -22,6 +22,10 @@ https://reactnative.dev/docs/scrollview
 
 https://docs.expo.dev/versions/latest/sdk/linear-gradient/
 
+# Icons
+
+https://icons.expo.fyi
+
 #
 
 start -> 10
