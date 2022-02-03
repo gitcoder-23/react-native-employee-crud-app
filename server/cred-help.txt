@@ -1,0 +1,5 @@
+// cred
+
+user: react-native-employee
+pwd: react-native-employee
+
