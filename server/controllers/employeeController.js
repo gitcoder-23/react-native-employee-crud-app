@@ -3,18 +3,29 @@ const EmployeeModel = require('../models/EmployeeModel');
 
 // Add Employee => /api/v1/create
 exports.addEmployee = async (req, res, next) => {
-  const employee = await EmployeeModel.create(req.body);
-  try {
-    console.log('employee->', employee);
-
-    res.status(201).json({
-      success: true,
-      message: 'Employee added successfully',
-      employee,
-    });
-  } catch (error) {
-    console.log(error);
-  }
+  // console.log('user', user);
+  const user = req.body;
+  // console.log('user', user);
+  EmployeeModel.findOne({ email: user.email }, function (err, existingUser) {
+    if (existingUser) {
+      res.status(400).json({
+        success: true,
+        message: 'Email already exists',
+      });
+    } else if (existingUser == null) {
+      const user = req.body;
+      // user.roles = ["student"];
+      EmployeeModel.create(user, function (err, employee) {
+        res.status(201).json({
+          success: true,
+          message: 'Employee added successfully',
+          employee,
+        });
+      });
+    } else {
+      res.json(null);
+    }
+  });
 };
 
 // get all Employees => /api/v1/employees
