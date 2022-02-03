@@ -55,6 +55,20 @@ app.get('/', (req, res) => {
   res.send('Welcome to node server!');
 });
 
+// testing
+app.post('/send', (req, res) => {
+  // bodyParser testing after post
+  console.log('req->', req.body);
+  res.send('Posted');
+});
+
+// import routes
+const employeeRoute = require('./routes/employeeRoute');
+
+// main routes api
+// main route
+app.use('/api/v1', employeeRoute);
+
 const serverPort = process.env.PORT || 3007;
 
 app.listen(serverPort, () => {
