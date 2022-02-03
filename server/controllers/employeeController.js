@@ -29,6 +29,24 @@ exports.getEmployees = async (req, res, next) => {
   });
 };
 
+// get single employee details => /api/v1/employee/:id
+exports.getSingleEmployee = async (req, res, next) => {
+  // "id" is same as route id
+  const employee = await EmployeeModel.findById(req.params.id);
+  if (!employee) {
+    return res.status(404).json({
+      success: false,
+      message: 'Employee not found',
+    });
+  } else {
+    res.status(200).json({
+      success: true,
+      message: 'Employee has been displayed',
+      employee,
+    });
+  }
+};
+
 // Update employee => /api/v1/update/:id
 exports.updateEmployee = async (req, res, next) => {
   // "id" is same as route id
@@ -46,12 +64,17 @@ exports.updateEmployee = async (req, res, next) => {
     runValidators: true,
     useFindAndModify: false,
   });
-  // header problem solved
-  res.status(200).json({
-    success: true,
-    message: 'Employee updated successfully',
-    employee,
-  });
+  try {
+    console.log('employee', employee);
+    // header problem solved
+    res.status(200).json({
+      success: true,
+      message: 'Employee updated successfully',
+      employee,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // Delete employee => /api/v1/delemployee/:id
@@ -66,10 +89,29 @@ exports.deleteEmployee = async (req, res, next) => {
     });
   }
   await employee.remove();
+  try {
+    console.log('employee', employee);
+    res.status(200).json({
+      success: true,
+      message: 'Employee has been deleted',
+      employee,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-  res.status(200).json({
-    success: true,
-    message: 'Employee has been deleted',
-    employee,
-  });
+// process 2 delete
+exports.deleteEmp = async (req, res, next) => {
+  const employee = await EmployeeModel.findByIdAndRemove(req.body.id);
+  try {
+    console.log('del', employee);
+    res.status(200).json({
+      success: true,
+      message: 'Employee has been deleted',
+      employee,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
