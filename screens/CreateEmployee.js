@@ -12,6 +12,9 @@ const CreateEmployee = () => {
   const [picture, setPicture] = useState('');
   const [modal, setModal] = useState(false);
   const [image, setImage] = useState(null);
+  const [apiStatus, setApiStatus] = useState();
+  const [apiUploadStatus, setApiUploadStatus] = useState('Upload Image');
+
   const pickFromGalary = async () => {
     // const { granted } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     // const [status] = ImagePicker.useMediaLibraryPermissions(null);
@@ -28,7 +31,7 @@ const CreateEmployee = () => {
     //   Alert.alert('You need to give up permission to work');
     // }
     console.log('Galary');
-    let result = await ImagePicker.launchImageLibraryAsync({
+    let data = await ImagePicker.launchImageLibraryAsync({
       // All insteed of images
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -37,10 +40,19 @@ const CreateEmployee = () => {
       quality: 1,
     });
 
-    console.log(result);
+    console.log(data);
 
-    if (!result.cancelled) {
-      setImage(result.uri);
+    if (!data.cancelled) {
+      setImage(data.uri);
+      // console.log('filesplit', data.uri.split('.')[3]);
+      // add type of file
+      let newFile = {
+        uri: data.uri,
+        // image file split and make array
+        type: `employees/${data.uri.split('.')[1]}`,
+        name: `employeesimg-${Date.now()}.${data.uri.split('.')[1]}`,
+      };
+      handleUploadCloud(newFile);
     }
   };
 
@@ -60,7 +72,7 @@ const CreateEmployee = () => {
     //   Alert.alert('You need to give up permission to work');
     // }
     console.log('Camera');
-    let result = await ImagePicker.launchCameraAsync({
+    let data = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       // aspect: [4, 3],
@@ -68,15 +80,58 @@ const CreateEmployee = () => {
       quality: 1,
     });
 
-    console.log(result);
-    if (!result.cancelled) {
-      setImage(result.uri);
+    console.log(data);
+    if (!data.cancelled) {
+      setImage(data.uri);
+      // console.log('filesplit', data.uri.split('.')[3]);
+      // add type of file
+      let newFile = {
+        uri: data.uri,
+        // image file split and make array
+        type: `employees/${data.uri.split('.')[1]}`,
+        name: `employeesimg-${Date.now()}.${data.uri.split('.')[1]}`,
+      };
+      handleUploadCloud(newFile);
     }
+  };
+
+  const handleUploadCloud = (image) => {
+    const data = new FormData();
+    data.append('file', image);
+    // "employeeApp" taken from cloudinary
+    data.append('upload_preset', 'employeeApp');
+    data.append('cloud_name', 'drcloud21');
+
+    fetch('https://api.cloudinary.com/v1_1/drcloud21/image/upload', {
+      method: 'post',
+      body: data,
+    })
+      .then((res) => {
+        console.log('res', res.status);
+        setApiStatus(res.status);
+        res.json();
+      })
+      .then((data) => {
+        // console.log('upData->', data);
+        setApiUploadStatus('Upload Image');
+        if (apiStatus === 200) {
+          setPicture(data?.url);
+          setApiUploadStatus('Uploaded');
+          setModal(false);
+          setTimeout(() => {
+            setApiUploadStatus('Upload Image');
+          }, 1000);
+        }
+        // setPicture(data?.url);
+        // setModal(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
     <View style={styles.root}>
-      {/* <Text>Create Employee</Text> */}
       <TextInput
         label="Name"
         mode="outlined"
@@ -122,7 +177,7 @@ const CreateEmployee = () => {
         />
       )}
       <Button
-        icon="upload"
+        icon={picture == '' ? 'upload' : 'check'}
         style={styles.importStyle}
         theme={theme}
         mode="contained"
@@ -131,7 +186,7 @@ const CreateEmployee = () => {
           setModal(true);
         }}
       >
-        Upload Image
+        {picture === '' ? apiUploadStatus : apiUploadStatus}
       </Button>
 
       <Button
