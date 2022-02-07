@@ -39,7 +39,7 @@ const Home = (props) => {
         <Card
           style={styles.myCard}
           // props pass here ase "item"
-          onPress={() => props.navigation.navigate('Profile', { item: item })}
+          onPress={() => navigation.navigate('Profile', { item: item })}
         >
           <View style={styles.cardView}>
             <Image
