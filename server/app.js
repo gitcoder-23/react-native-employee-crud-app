@@ -5,14 +5,12 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
-
 // invoked
 const app = express();
 dotenv.config();
 
 // Database
 const mongoUrl = `${process.env.MONGODB_URL}`;
-
 // connect with db
 mongoose.connect(
   mongoUrl,

@@ -49,6 +49,20 @@ react-native-gesture-handler
 @react-native-masked-view/masked-view
 @react-navigation/native-stack
 
+# for Backend api with React native connection
+
+npm install ngrok -g
+
+# style to make http/ https server
+
+ngrok http 8080
+
+## At first open node server then ngrox server
+
+# Link
+
+https://www.npmjs.com/package/ngrok
+
 # For image picking
 
 https://docs.expo.dev/versions/latest/sdk/imagepicker/
