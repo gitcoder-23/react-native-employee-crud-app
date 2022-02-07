@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Modal, Alert, Image } from 'react-native';
 import React, { useState } from 'react';
 import { TextInput, Button } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
+// import axios from 'axios';
 
 const CreateEmployee = () => {
   const [name, setName] = useState('');
@@ -9,10 +10,9 @@ const CreateEmployee = () => {
   const [email, setEmail] = useState('');
   const [salary, setSalary] = useState('');
   const [picture, setPicture] = useState('');
+  const [position, setPosition] = useState('');
   const [modal, setModal] = useState(false);
   const [image, setImage] = useState(null);
-  const [apiStatus, setApiStatus] = useState();
-  const [apiUploadStatus, setApiUploadStatus] = useState('Upload Image');
 
   const pickFromGalary = async () => {
     console.log('Galary');
@@ -22,17 +22,17 @@ const CreateEmployee = () => {
       allowsEditing: true,
       // aspect: [4, 3],
       aspect: [1, 1],
-      quality: 1,
+      quality: 0.5,
     });
 
-    console.log(data);
+    console.log('pickFromGalary->', data);
 
     if (!data.cancelled) {
-      setImage(data.uri);
-      // console.log('filesplit', data.uri.split('.')[3]);
+      setImage(data?.uri);
+      console.log('filesplit', data.uri.split('.')[3]);
       // add type of file
       let newFile = {
-        uri: data.uri,
+        uri: data?.uri,
         // image file split and make array
         type: `employees/${data.uri.split('.')[1]}`,
         name: `employeesimg-${Date.now()}.${data.uri.split('.')[1]}`,
@@ -48,12 +48,12 @@ const CreateEmployee = () => {
       allowsEditing: true,
       // aspect: [4, 3],
       aspect: [1, 1],
-      quality: 1,
+      quality: 0.5,
     });
 
-    console.log(data);
+    console.log('pickFromCamera->', data);
     if (!data.cancelled) {
-      setImage(data.uri);
+      setImage(data?.uri);
       // console.log('filesplit', data.uri.split('.')[3]);
       // add type of file
       let newFile = {
@@ -77,28 +77,44 @@ const CreateEmployee = () => {
       method: 'post',
       body: data,
     })
-      .then((res) => {
-        console.log('res', res.status);
-        setApiStatus(res.status);
-        res.json();
-      })
+      // axios
+      //   .post('https://api.cloudinary.com/v1_1/drcloud21/image/upload', data)
+      .then((res) => res.json())
       .then((data) => {
-        // console.log('upData->', data);
-        setApiUploadStatus('Upload Image');
-        if (apiStatus === 200) {
-          setPicture(data?.url);
-          setApiUploadStatus('Uploaded');
-          setModal(false);
-          setTimeout(() => {
-            setApiUploadStatus('Upload Image');
-          }, 1000);
-        }
-        // setPicture(data?.url);
-        // setModal(false);
+        console.log('upData->', data);
+        // setApiUploadStatus('Upload Image');
+        // if (apiStatus === 200) {
+        //   setPicture(data.url);
+        //   setModal(false);
+        // }
+        setPicture(data?.url);
+        setModal(false);
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const submitData = () => {
+    fetch('https://react-native-server-api.herokuapp.com/api/v1/create', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        phone: phone,
+        salary: salary,
+        picture: picture,
+        position: position,
+      }),
+    })
+      .then((resPost) => resPost.json())
+      .then((postData) => {
+        console.log('postData', postData);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -136,6 +152,14 @@ const CreateEmployee = () => {
         value={salary}
         onChangeText={(text) => setSalary(text)}
       />
+      <TextInput
+        label="Position"
+        mode="outlined"
+        theme={theme}
+        style={styles.importStyle}
+        value={position}
+        onChangeText={(text) => setPosition(text)}
+      />
 
       {image && (
         <Image
@@ -157,7 +181,8 @@ const CreateEmployee = () => {
           setModal(true);
         }}
       >
-        {picture === '' ? apiUploadStatus : apiUploadStatus}
+        {/* {picture === '' ? apiUploadStatus : apiUploadStatus} */}
+        Upload Image
       </Button>
 
       <Button
@@ -165,9 +190,7 @@ const CreateEmployee = () => {
         style={styles.importStyle}
         theme={theme}
         mode="contained"
-        onPress={() => {
-          console.log('Save');
-        }}
+        onPress={submitData}
       >
         Save
       </Button>
@@ -217,13 +240,6 @@ const CreateEmployee = () => {
 };
 
 export default CreateEmployee;
-
-const theme = {
-  colors: {
-    primary: '#006aff',
-  },
-};
-
 const styles = StyleSheet.create({
   root: {
     // take complete height
@@ -244,3 +260,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
+
+const theme = {
+  colors: {
+    primary: '#006aff',
+  },
+};

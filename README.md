@@ -85,6 +85,22 @@ https://cloudinary.com/documentation/image_upload_api_reference
 
 https://react-native-server-api.herokuapp.com/api/v1
 
+# Fetch process by JS
+
+https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+
+# API Manage by Axios
+
+https://sunnychopper.medium.com/how-to-use-axios-to-quickly-connect-to-an-api-in-your-react-native-application-a69c1c048f8e
+
+#
+
+https://blog.logrocket.com/using-axios-react-native-manage-api-requests/
+
+# Axios Hook
+
+https://snack.expo.dev/@simoneb/axios-hooks-react-native
+
 #
 
 start -> 22
