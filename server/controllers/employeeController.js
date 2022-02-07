@@ -31,13 +31,19 @@ exports.addEmployee = async (req, res, next) => {
 // get all Employees => /api/v1/employees
 exports.getEmployees = async (req, res, next) => {
   const employees = await EmployeeModel.find();
-
-  res.status(200).json({
-    success: true,
-    count: employees.length,
-    message: 'All employees have been dislayed',
-    employees,
-  });
+  if (employees.length === 0) {
+    return res.status(404).json({
+      success: false,
+      message: 'Employee not found',
+    });
+  } else {
+    res.status(200).json({
+      success: true,
+      count: employees.length,
+      message: 'All employees have been dislayed',
+      employees,
+    });
+  }
 };
 
 // get single employee details => /api/v1/employee/:id
