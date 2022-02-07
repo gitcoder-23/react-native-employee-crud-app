@@ -79,6 +79,12 @@ https://docs.expo.dev/versions/v44.0.0/sdk/imagepicker/
 
 https://cloudinary.com/documentation/image_upload_api_reference
 
+# At first start the node server
+
+# Backend server link
+
+https://react-native-server-api.herokuapp.com/api/v1
+
 #
 
 start -> 22
