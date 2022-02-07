@@ -8,6 +8,4 @@ nodemon
 cors
 morgan
 
-# email exists
-
-https://youtu.be/h5AGblKYhLU
+# this is server
