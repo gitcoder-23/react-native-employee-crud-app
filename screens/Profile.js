@@ -6,7 +6,7 @@ import { Title, Card, Button } from 'react-native-paper';
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
 
 const Profile = (props) => {
-  const { id, name, email, picture, phone, salary, position } =
+  const { _id, name, email, picture, phone, salary, position } =
     props.route.params.item;
   const openDial = () => {
     if (Platform.OS === 'android') {
@@ -17,7 +17,7 @@ const Profile = (props) => {
   };
   return (
     <>
-      <View style={styles.root} key={id}>
+      <View style={styles.root} key={_id}>
         <LinearGradient
           colors={['#0033ff', '#6bc1ff']}
           style={{ height: '20%' }}

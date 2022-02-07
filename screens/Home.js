@@ -1,102 +1,37 @@
 /* eslint-disable react/prop-types */
-import { StyleSheet, Text, Image, View, FlatList } from 'react-native';
-import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  Image,
+  View,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { Card, FAB } from 'react-native-paper';
+import axios from 'axios';
 
 const Home = (props) => {
-  const dummyData = [
-    {
-      id: 1,
-      name: 'Mark',
-      email: 'mark@yahoo.com',
-      phone: '8757474758',
-      salary: '8LPA',
-      picture:
-        'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1760&q=80',
-      position: 'Software Developer',
-    },
-    {
-      id: 2,
-      name: 'Huge',
-      email: 'huge@yahoo.com',
-      phone: '7757474758',
-      salary: '9LPA',
-      picture:
-        'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
-      position: 'Web Developer',
-    },
-    {
-      id: 3,
-      name: 'Lara',
-      email: 'lara@yahoo.com',
-      phone: '9757474758',
-      salary: '10LPA',
-      picture:
-        'https://images.unsplash.com/photo-1628157588553-5eeea00af15c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
-      position: 'UI Developer',
-    },
-    {
-      id: 4,
-      name: 'Manderin',
-      email: 'manderin@yahoo.com',
-      phone: '7557474758',
-      salary: '8LPA',
-      picture:
-        'https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
-      position: 'UX Developer',
-    },
-    {
-      id: 5,
-      name: 'Subhash',
-      email: 'subhash@yahoo.com',
-      phone: '9557474758',
-      salary: '16LPA',
-      picture:
-        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
-      position: 'QA Analyst',
-    },
-    {
-      id: 6,
-      name: 'Prabha',
-      email: 'prabha@yahoo.com',
-      phone: '6557474758',
-      salary: '15LPA',
-      picture:
-        'https://images.unsplash.com/photo-1499887142886-791eca5918cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
-      position: 'UI Developer',
-    },
-    {
-      id: 7,
-      name: 'Prity',
-      email: 'prity@yahoo.com',
-      phone: '4557474758',
-      salary: '20LPA',
-      picture:
-        'https://images.unsplash.com/photo-1586297135537-94bc9ba060aa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
-      position: 'DevOps',
-    },
-  ];
+  const { navigation } = props;
+  const [allEmpData, setAllEmpData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // const renderList = dummyData.reverse().map((item) => {
-  //   return (
-  //     <>
-  //       <Card style={styles.myCard} key={item.id}>
-  //         <View style={styles.cardView}>
-  //           <Image
-  //             style={{ width: 60, height: 60, borderRadius: 60 / 2 }}
-  //             source={{
-  //               uri: 'https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
-  //             }}
-  //           />
-  //           <View style={{ marginLeft: 20 }}>
-  //             <Text style={styles.text}>{item.name}</Text>
-  //             <Text style={styles.text}>{item.position}</Text>
-  //           </View>
-  //         </View>
-  //       </Card>
-  //     </>
-  //   );
-  // });
+  const getAllEmployee = () => {
+    axios
+      .get(`https://react-native-server-api.herokuapp.com/api/v1/employees`)
+      .then((res) => {
+        // console.log('getAllEmployee->', res.data.employees);
+        setAllEmpData(res.data.employees.reverse());
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    //   fetch('https://react-native-server-api.herokuapp.com/api/v1/employees')
+    // .then(response => response.json())
+    // .then(data => console.log(data));
+    getAllEmployee();
+  }, []);
 
   const renderList = (item) => {
     return (
@@ -110,7 +45,7 @@ const Home = (props) => {
             <Image
               style={{ width: 60, height: 60, borderRadius: 60 / 2 }}
               source={{
-                uri: 'https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
+                uri: `${item.picture}`,
               }}
             />
             <View style={{ marginLeft: 20 }}>
@@ -126,16 +61,21 @@ const Home = (props) => {
     <View style={styles.root}>
       {/* {renderList} */}
       {/* it provides scrollview */}
-      <FlatList
-        data={dummyData}
-        renderItem={({ item }) => {
-          // check inside of compiler
-          // console.log('dummyData->', item)
-          return renderList(item);
-        }}
-        keyExtractor={(item) => item.id}
-        // keyExtractor={(item) => `${item.id}`}
-      />
+      {loading ? (
+        <>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </>
+      ) : (
+        <>
+          <FlatList
+            data={allEmpData}
+            renderItem={({ item }) => {
+              return renderList(item);
+            }}
+            keyExtractor={(item) => item._id}
+          />
+        </>
+      )}
       <FAB
         onPress={() => props.navigation.navigate('Create')}
         style={styles.fab}

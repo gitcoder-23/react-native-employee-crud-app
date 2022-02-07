@@ -101,6 +101,10 @@ https://blog.logrocket.com/using-axios-react-native-manage-api-requests/
 
 https://snack.expo.dev/@simoneb/axios-hooks-react-native
 
+# Loading
+
+https://reactnative.dev/docs/activityindicator
+
 #
 
 start -> 22
