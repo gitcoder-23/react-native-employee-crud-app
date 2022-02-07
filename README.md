@@ -107,4 +107,4 @@ https://reactnative.dev/docs/activityindicator
 
 #
 
-start -> 22
+start -> 25
