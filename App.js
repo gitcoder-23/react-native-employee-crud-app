@@ -22,8 +22,7 @@ const myOptions = {
   },
 };
 
-function App(props) {
-  console.log('props', props);
+function App() {
   return (
     <View style={styles.container}>
       {/* 'headerMode="none"' is deprecated in version 6.x headerShown="false"*/}
