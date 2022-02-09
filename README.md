@@ -105,6 +105,10 @@ https://snack.expo.dev/@simoneb/axios-hooks-react-native
 
 https://reactnative.dev/docs/activityindicator
 
+# Confirm dialog
+
+https://www.kindacode.com/article/how-to-create-a-confirm-dialog-in-react-native/
+
 #
 
 start -> 25

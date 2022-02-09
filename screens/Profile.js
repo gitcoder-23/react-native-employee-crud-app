@@ -1,18 +1,83 @@
 /* eslint-disable react/prop-types */
-import { StyleSheet, Text, View, Image, Linking, Platform } from 'react-native';
-import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Linking,
+  Platform,
+  Alert,
+} from 'react-native';
+import React, { useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Title, Card, Button } from 'react-native-paper';
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
+import axios from 'axios';
 
 const Profile = (props) => {
+  const [showBox, setShowBox] = useState(true);
   const { _id, name, email, picture, phone, salary, position } =
     props.route.params.item;
+  // console.log('_id->', _id);
   const openDial = () => {
     if (Platform.OS === 'android') {
       Linking.openURL(`tel: ${phone}`);
     } else {
       Linking.openURL(`telprompt: ${phone}`);
+    }
+  };
+
+  const deleteEmployee = () => {
+    // console.log('delete');
+    // fetch(`https://react-native-server-api.herokuapp.com/api/v1/delemp`, {
+    //   method: 'post',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     id: _id,
+    //   }),
+    // })
+    //   .then((res) => res.json())
+    //   .then((deleteEmp) => {
+    //     console.log('deleteEmp', deleteEmp);
+    //     Alert.alert(`${deleteEmp.name} deleted`);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     Alert.alert(`Something went wrong`);
+    //   });
+    if (
+      Alert.alert(
+        'Are your sure?',
+        'Do you want to delete?',
+        [
+          {
+            text: 'Yes',
+            onPress: () => {
+              setShowBox(false);
+              axios
+                .delete(
+                  `https://react-native-server-api.herokuapp.com/api/v1/delemployee/${_id}`
+                )
+                .then((deleteEmp) => {
+                  console.log('deleteEmp', deleteEmp);
+                  Alert.alert(`${deleteEmp.data.employee.name} deleted`);
+                })
+                .catch((err) => {
+                  console.log(err);
+                  Alert.alert(`Something went wrong`);
+                });
+            },
+          },
+          {
+            text: 'No',
+          },
+        ],
+        { cancelable: false }
+      )
+    ) {
+      return;
     }
   };
   return (
@@ -22,6 +87,7 @@ const Profile = (props) => {
           colors={['#0033ff', '#6bc1ff']}
           style={{ height: '20%' }}
         />
+        {showBox && <View style={styles.box}></View>}
         <View style={{ alignItems: 'center' }}>
           <Image
             style={{
@@ -75,7 +141,7 @@ const Profile = (props) => {
             icon="delete"
             mode="contained"
             theme={theme}
-            onPress={() => console.log('delete')}
+            onPress={() => deleteEmployee()}
           >
             Fire Employee
           </Button>
