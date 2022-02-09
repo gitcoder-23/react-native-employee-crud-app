@@ -13,13 +13,81 @@ import * as ImagePicker from 'expo-image-picker';
 // import axios from 'axios';
 
 const CreateEmployee = (props) => {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [salary, setSalary] = useState('');
-  const [picture, setPicture] = useState('');
-  const [position, setPosition] = useState('');
+  // console.log(props);
+
+  // For Edit Start
+  const { navigation, route } = props;
+
+  const getDetails = (type) => {
+    if (route.params) {
+      // console.log('route.params->', route.params);
+      switch (type) {
+        case 'name':
+          return route.params.name;
+        case 'phone':
+          return route.params.phone;
+        case 'email':
+          return route.params.email;
+        case 'salary':
+          return route.params.salary;
+        case 'picture':
+          return route.params.picture;
+        case 'position':
+          return route.params.position;
+      }
+    } else {
+      return '';
+    }
+  };
+
+  const updateData = () => {
+    fetch(
+      `https://react-native-server-api.herokuapp.com/api/v1/update/${route.params._id}`,
+      {
+        method: 'put',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: route.params._id,
+          name: name,
+          email: email,
+          phone: phone,
+          salary: salary,
+          picture: picture,
+          position: position,
+        }),
+      }
+    )
+      .then((resPost) => resPost.json())
+      .then((upData) => {
+        console.log('postData->', upData);
+        Alert.alert(`Employee ${upData.employee.name} updated`);
+        setName('');
+        setEmail('');
+        setSalary('');
+        setPicture('');
+        setPosition('');
+        setImage(null);
+        navigation.navigate('Home');
+      })
+      .catch((err) => {
+        Alert.alert(`Something went wrong ${err}`);
+        console.log(err);
+      });
+  };
+
+  // Edit End
+
+  const [name, setName] = useState(getDetails('name'));
+  const [phone, setPhone] = useState(getDetails('phone'));
+  const [email, setEmail] = useState(getDetails('email'));
+  const [salary, setSalary] = useState(getDetails('salary'));
+  const [picture, setPicture] = useState(getDetails('picture'));
+  const [position, setPosition] = useState(getDetails('position'));
   const [modal, setModal] = useState(false);
+  const [afterUploadImg, setAfterUploadImg] = useState(false);
+  const [uploadtext, setUploadtext] = useState(false);
   const [image, setImage] = useState(null);
 
   const pickFromGalary = async () => {
@@ -97,6 +165,11 @@ const CreateEmployee = (props) => {
         //   setModal(false);
         // }
         setPicture(data?.url);
+        setAfterUploadImg(true);
+        setUploadtext(true);
+        setTimeout(() => {
+          setUploadtext(false);
+        }, 2000);
         setModal(false);
       })
       .catch((err) => {
@@ -130,12 +203,46 @@ const CreateEmployee = (props) => {
         setPicture('');
         setPosition('');
         setImage(null);
-        props.navigation.navigate('Home');
+        navigation.navigate('Home');
       })
       .catch((err) => {
         Alert.alert(`Something went wrong ${err}`);
         // console.log(err);
       });
+  };
+
+  const pictureImage = () => {
+    return (
+      <>
+        {picture !== '' && afterUploadImg == false ? (
+          <>
+            {route.params && (
+              <Image
+                source={{ uri: route.params.picture }}
+                style={{
+                  width: 80,
+                  height: 80,
+                  borderRadius: 80 / 2,
+                }}
+              />
+            )}
+          </>
+        ) : (
+          <>
+            {image && (
+              <Image
+                source={{ uri: image }}
+                style={{
+                  width: 80,
+                  height: 80,
+                  borderRadius: 80 / 2,
+                }}
+              />
+            )}
+          </>
+        )}
+      </>
+    );
   };
 
   return (
@@ -183,7 +290,7 @@ const CreateEmployee = (props) => {
           onChangeText={(text) => setPosition(text)}
         />
 
-        {image && (
+        {/* {image && (
           <Image
             source={{ uri: image }}
             style={{
@@ -192,7 +299,8 @@ const CreateEmployee = (props) => {
               borderRadius: 80 / 2,
             }}
           />
-        )}
+        )} */}
+        {pictureImage()}
         <Button
           icon={picture == '' ? 'upload' : 'check'}
           style={styles.importStyle}
@@ -203,19 +311,29 @@ const CreateEmployee = (props) => {
             setModal(true);
           }}
         >
-          {/* {picture === '' ? apiUploadStatus : apiUploadStatus} */}
-          Upload Image
+          {uploadtext == true ? 'Uploaded' : 'Upload Image'}
         </Button>
-
-        <Button
-          icon="content-save"
-          style={styles.importStyle}
-          theme={theme}
-          mode="contained"
-          onPress={submitData}
-        >
-          Save
-        </Button>
+        {route.params ? (
+          <Button
+            icon="content-save"
+            style={styles.importStyle}
+            theme={theme}
+            mode="contained"
+            onPress={() => updateData()}
+          >
+            Update
+          </Button>
+        ) : (
+          <Button
+            icon="content-save"
+            style={styles.importStyle}
+            theme={theme}
+            mode="contained"
+            onPress={() => submitData()}
+          >
+            Save
+          </Button>
+        )}
 
         {/* modal start */}
         <Modal
