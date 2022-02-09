@@ -6,6 +6,7 @@ import {
   View,
   FlatList,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { Card, FAB } from 'react-native-paper';
@@ -23,6 +24,9 @@ const Home = (props) => {
         // console.log('getAllEmployee->', res.data.employees);
         setAllEmpData(res.data.employees.reverse());
         setLoading(false);
+      })
+      .catch((err) => {
+        Alert.alert('Something went wrong');
       });
   };
 
@@ -59,7 +63,6 @@ const Home = (props) => {
   };
   return (
     <View style={styles.root}>
-      {/* {renderList} */}
       {/* it provides scrollview */}
       {loading ? (
         <>
@@ -73,9 +76,22 @@ const Home = (props) => {
               return renderList(item);
             }}
             keyExtractor={(item) => item._id}
+            // after insert refresh list by pull screen
+            onRefresh={() => getAllEmployee()}
+            refreshing={loading}
           />
         </>
       )}
+      {/* <FlatList
+        data={allEmpData}
+        renderItem={({ item }) => {
+          return renderList(item);
+        }}
+        keyExtractor={(item) => item._id}
+        // after insert auto refresh list
+        onRefresh={() => getAllEmployee()}
+        refreshing={loading}
+      /> */}
       <FAB
         onPress={() => props.navigation.navigate('Create')}
         style={styles.fab}
