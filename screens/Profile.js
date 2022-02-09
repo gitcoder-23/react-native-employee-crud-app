@@ -64,7 +64,12 @@ const Profile = (props) => {
                   const { employee, message, success } = deleteEmp.data;
                   console.log('deleteEmp', deleteEmp);
                   if (success == true) {
-                    Alert.alert(`${employee.name} deleted`);
+                    if (employee.name == '') {
+                      Alert.alert(`${message}`);
+                    } else {
+                      Alert.alert(`${employee.name} deleted`);
+                    }
+
                     props.navigation.navigate('Home');
                   }
                 })

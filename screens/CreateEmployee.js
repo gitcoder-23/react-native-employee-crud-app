@@ -61,7 +61,8 @@ const CreateEmployee = (props) => {
     )
       .then((resPost) => resPost.json())
       .then((upData) => {
-        console.log('postData->', upData);
+        // console.log('upData->', upData);
+
         Alert.alert(`Employee ${upData.employee.name} updated`);
         setName('');
         setEmail('');
@@ -154,11 +155,9 @@ const CreateEmployee = (props) => {
       method: 'post',
       body: data,
     })
-      // axios
-      //   .post('https://api.cloudinary.com/v1_1/drcloud21/image/upload', data)
       .then((res) => res.json())
       .then((data) => {
-        console.log('upData->', data);
+        console.log('upCloud->', data);
         // setApiUploadStatus('Upload Image');
         // if (apiStatus === 200) {
         //   setPicture(data.url);
@@ -207,7 +206,7 @@ const CreateEmployee = (props) => {
       })
       .catch((err) => {
         Alert.alert(`Something went wrong ${err}`);
-        // console.log(err);
+        console.log(err);
       });
   };
 
@@ -302,7 +301,8 @@ const CreateEmployee = (props) => {
             setModal(true);
           }}
         >
-          {uploadtext == true ? 'Uploaded' : 'Upload Image'}
+          Upload Image
+          {/* {uploadtext == true ? 'Uploaded' : 'Upload Image'} */}
         </Button>
         {route.params ? (
           <Button
