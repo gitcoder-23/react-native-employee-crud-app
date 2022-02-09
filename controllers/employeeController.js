@@ -120,15 +120,23 @@ exports.deleteEmployee = async (req, res, next) => {
 
 // process 2 delete
 exports.deleteEmp = async (req, res, next) => {
-  const employee = await EmployeeModel.findByIdAndRemove(req.body.id);
-  try {
-    console.log('del', employee);
-    res.status(200).json({
-      success: true,
-      message: 'Employee has been deleted',
-      employee,
+  // "id"
+  await EmployeeModel.findByIdAndRemove(req.body.id)
+    .then((data) => {
+      console.log(data);
+      res.send(data);
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  } catch (error) {
-    console.log(error);
-  }
+  // try {
+  //   console.log('del', employee);
+  //   res.status(200).json({
+  //     success: true,
+  //     message: 'Employee has been deleted',
+  //     employee,
+  //   });
+  // } catch (error) {
+  //   console.log(error);
+  // }
 };
