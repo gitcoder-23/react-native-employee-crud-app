@@ -109,6 +109,8 @@ https://reactnative.dev/docs/activityindicator
 
 https://www.kindacode.com/article/how-to-create-a-confirm-dialog-in-react-native/
 
+https://reactnative.dev/docs/alert
+
 #
 
 start -> 25

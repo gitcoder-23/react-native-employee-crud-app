@@ -61,8 +61,12 @@ const Profile = (props) => {
                   `https://react-native-server-api.herokuapp.com/api/v1/delemployee/${_id}`
                 )
                 .then((deleteEmp) => {
+                  const { employee, message, success } = deleteEmp.data;
                   console.log('deleteEmp', deleteEmp);
-                  Alert.alert(`${deleteEmp.data.employee.name} deleted`);
+                  if (success == true) {
+                    Alert.alert(`${employee.name} deleted`);
+                    props.navigation.navigate('Home');
+                  }
                 })
                 .catch((err) => {
                   console.log(err);
