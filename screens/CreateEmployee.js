@@ -290,17 +290,8 @@ const CreateEmployee = (props) => {
           onChangeText={(text) => setPosition(text)}
         />
 
-        {/* {image && (
-          <Image
-            source={{ uri: image }}
-            style={{
-              width: 80,
-              height: 80,
-              borderRadius: 80 / 2,
-            }}
-          />
-        )} */}
         {pictureImage()}
+
         <Button
           icon={picture == '' ? 'upload' : 'check'}
           style={styles.importStyle}
