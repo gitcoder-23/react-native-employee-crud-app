@@ -111,6 +111,8 @@ https://www.kindacode.com/article/how-to-create-a-confirm-dialog-in-react-native
 
 https://reactnative.dev/docs/alert
 
+# When cloudinary 1gb complete then undefined object data error
+
 #
 
 start -> 25
