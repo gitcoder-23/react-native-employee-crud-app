@@ -90,6 +90,8 @@ const CreateEmployee = (props) => {
   const [afterUploadImg, setAfterUploadImg] = useState(false);
   const [uploadtext, setUploadtext] = useState(false);
   const [image, setImage] = useState(null);
+  // enable shift up
+  const [enableShift, setEnableShift] = useState(null);
 
   const pickFromGalary = async () => {
     console.log('Galary');
@@ -245,11 +247,12 @@ const CreateEmployee = (props) => {
   };
 
   return (
-    <View style={styles.root}>
-      <KeyboardAvoidingView behavior="position">
+    <KeyboardAvoidingView behavior="position" enabled={enableShift}>
+      <View>
         <TextInput
           label="Name"
           mode="outlined"
+          onFocus={() => setEnableShift(false)}
           theme={theme}
           style={styles.importStyle}
           value={name}
@@ -258,6 +261,7 @@ const CreateEmployee = (props) => {
         <TextInput
           label="Email"
           mode="outlined"
+          onFocus={() => setEnableShift(false)}
           theme={theme}
           style={styles.importStyle}
           value={email}
@@ -267,6 +271,7 @@ const CreateEmployee = (props) => {
           label="Phone"
           mode="outlined"
           keyboardType="number-pad"
+          onFocus={() => setEnableShift(false)}
           theme={theme}
           style={styles.importStyle}
           value={phone}
@@ -275,6 +280,7 @@ const CreateEmployee = (props) => {
         <TextInput
           label="Salary"
           mode="outlined"
+          onFocus={() => setEnableShift(true)}
           theme={theme}
           style={styles.importStyle}
           value={salary}
@@ -283,6 +289,7 @@ const CreateEmployee = (props) => {
         <TextInput
           label="Position"
           mode="outlined"
+          onFocus={() => setEnableShift(true)}
           theme={theme}
           style={styles.importStyle}
           value={position}
@@ -301,8 +308,7 @@ const CreateEmployee = (props) => {
             setModal(true);
           }}
         >
-          Upload Image
-          {/* {uploadtext == true ? 'Uploaded' : 'Upload Image'} */}
+          {uploadtext == true ? 'Uploaded' : 'Upload Image'}
         </Button>
         {route.params ? (
           <Button
@@ -366,8 +372,8 @@ const CreateEmployee = (props) => {
             </Button>
           </View>
         </Modal>
-      </KeyboardAvoidingView>
-    </View>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 
