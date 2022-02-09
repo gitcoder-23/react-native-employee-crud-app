@@ -11,6 +11,9 @@ import { StyleSheet, View } from 'react-native';
 import Home from './screens/Home';
 import CreateEmployee from './screens/CreateEmployee';
 import Profile from './screens/Profile';
+//  redux
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 const Stack = createStackNavigator();
 
@@ -48,6 +51,11 @@ function App() {
 export default () => {
   return (
     <>
+      {/* <Provider store={store}>
+        <NavigationContainer>
+          <App />
+        </NavigationContainer>
+      </Provider> */}
       <NavigationContainer>
         <App />
       </NavigationContainer>

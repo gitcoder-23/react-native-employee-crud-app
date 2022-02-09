@@ -49,6 +49,10 @@ react-native-gesture-handler
 @react-native-masked-view/masked-view
 @react-navigation/native-stack
 
+# state management redux
+
+npm i redux react-redux
+
 # for Backend api with React native connection
 
 npm install ngrok -g

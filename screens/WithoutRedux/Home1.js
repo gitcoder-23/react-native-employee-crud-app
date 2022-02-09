@@ -11,7 +11,6 @@ import {
 import React, { useEffect, useState } from 'react';
 import { Card, FAB } from 'react-native-paper';
 import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
 
 const Home = (props) => {
   const { navigation } = props;
