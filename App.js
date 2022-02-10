@@ -13,7 +13,8 @@ import CreateEmployee from './screens/CreateEmployee';
 import Profile from './screens/Profile';
 //  redux
 import { Provider } from 'react-redux';
-import { store } from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store';
 
 const Stack = createStackNavigator();
 
@@ -51,14 +52,16 @@ function App() {
 export default () => {
   return (
     <>
-      {/* <Provider store={store}>
-        <NavigationContainer>
-          <App />
-        </NavigationContainer>
-      </Provider> */}
-      <NavigationContainer>
+      <Provider store={store}>
+        <PersistGate persistor={persistor} loading={null}>
+          <NavigationContainer>
+            <App />
+          </NavigationContainer>
+        </PersistGate>
+      </Provider>
+      {/* <NavigationContainer>
         <App />
-      </NavigationContainer>
+      </NavigationContainer> */}
     </>
   );
 };

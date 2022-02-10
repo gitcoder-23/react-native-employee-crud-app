@@ -5,7 +5,7 @@ const initialState = {
   message: '',
 };
 
-export const employeeReducer = (state = initialState, action) => {
+const employeeReducer = (state = initialState, action) => {
   if (action.type == 'ADD_DATA') {
     return {
       ...state,
@@ -22,3 +22,5 @@ export const employeeReducer = (state = initialState, action) => {
 
   return state;
 };
+
+export default employeeReducer;

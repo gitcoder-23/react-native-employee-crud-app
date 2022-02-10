@@ -19,3 +19,20 @@ https://www.vysor.io/
 
 ## server postman api
 https://documenter.getpostman.com/view/11720158/UVeKpjUK
+
+
+##  TypeError: store.getState is not a function. (In ‘store.getState()’, ‘store.getState’ is undefined how can i resolve this problem?
+
+https://javascript.tutorialink.com/typeerror-store-getstate-is-not-a-function-in-store-getstate-store-getstate-is-undefined-how-can-i-resolve-this-problem/
+
+https://stackoverflow.com/questions/41962033/react-store-getstate-is-not-a-function
+
+
+## setup 
+yarn add react-redux
+yarn add redux-thunk
+yarn add redux-persist
+yarn add @react-native-async-storage/async-storage
+
+# Link
+https://negativeepsilon.com/posts/expo-react-redux/

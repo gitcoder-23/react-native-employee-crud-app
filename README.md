@@ -129,6 +129,10 @@ https://www.npmjs.com/package/react-native-user-avatar
 
 https://stackify.dev/619192-trouble-solving-source-uri-should-not-be-an-empty-string-in-react-native
 
+# Redux and more install
+
+https://negativeepsilon.com/posts/expo-react-redux/
+
 #
 
 start -> 25
