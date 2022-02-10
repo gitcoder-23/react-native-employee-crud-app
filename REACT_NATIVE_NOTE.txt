@@ -14,3 +14,8 @@ https://blog.codemagic.io/step-by-step-guide-to-kick-off-your-first-react-native
 https://www.vysor.io/
 
 # When cloudinary 1gb complete then undefined object data error
+
+
+
+## server postman api
+https://documenter.getpostman.com/view/11720158/UVeKpjUK
