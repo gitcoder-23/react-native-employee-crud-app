@@ -41,3 +41,11 @@ https://negativeepsilon.com/posts/expo-react-redux/
 
 ## .env setup
 https://levelup.gitconnected.com/using-environment-variables-in-a-react-native-app-f2dd005d2457
+
+
+# expo deployment
+expo login
+take sign up over expo website
+again type 
+expo login (give user & pwd)
+expo publish
