@@ -36,3 +36,8 @@ yarn add @react-native-async-storage/async-storage
 
 # Link
 https://negativeepsilon.com/posts/expo-react-redux/
+
+
+
+## .env setup
+https://levelup.gitconnected.com/using-environment-variables-in-a-react-native-app-f2dd005d2457

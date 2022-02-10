@@ -219,7 +219,10 @@ const CreateEmployee = (props) => {
           <>
             {route.params && (
               <Image
-                source={{ uri: route.params.picture }}
+                // source={{ uri: route.params.picture }}
+                source={
+                  route.params.picture ? { uri: route.params.picture } : null
+                }
                 style={{
                   width: 80,
                   height: 80,

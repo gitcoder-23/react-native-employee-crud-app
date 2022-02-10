@@ -12,11 +12,20 @@ import React, { useEffect, useState } from 'react';
 import { Card, FAB, Avatar } from 'react-native-paper';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
+import { loadEmployees } from '../store/actions/employeeActions';
 
 const Home = (props) => {
   const { navigation } = props;
   const [allEmpData, setAllEmpData] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  //  using redux
+  const dispatch = useDispatch();
+  const { allEmpDatas, isLoding, message } = useSelector(
+    (state) => state.employee
+  );
+
+  console.log('allEmpDatas->', allEmpDatas);
 
   const getAllEmployee = () => {
     axios
@@ -28,6 +37,7 @@ const Home = (props) => {
       })
       .catch((err) => {
         Alert.alert('Something went wrong');
+        console.log(err);
       });
   };
 
@@ -35,7 +45,8 @@ const Home = (props) => {
     //   fetch('https://react-native-server-api.herokuapp.com/api/v1/employees')
     // .then(response => response.json())
     // .then(data => console.log(data));
-    getAllEmployee();
+    // getAllEmployee();
+    dispatch(loadEmployees());
   }, []);
 
   const renderList = (item) => {
@@ -71,14 +82,14 @@ const Home = (props) => {
   return (
     <View style={styles.root}>
       {/* it provides scrollview */}
-      {loading ? (
+      {isLoding ? (
         <>
           {/* size={24} */}
           <ActivityIndicator size="large" color="#0000ff" />
         </>
       ) : (
         <>
-          <FlatList
+          {/* <FlatList
             data={allEmpData}
             renderItem={({ item }) => {
               return renderList(item);
@@ -87,6 +98,16 @@ const Home = (props) => {
             // after insert refresh list by pull screen
             onRefresh={() => getAllEmployee()}
             refreshing={loading}
+          /> */}
+          <FlatList
+            data={allEmpDatas}
+            renderItem={({ item }) => {
+              return renderList(item);
+            }}
+            keyExtractor={(item) => item._id}
+            // after insert refresh list by pull screen
+            onRefresh={() => dispatch(loadEmployees())}
+            refreshing={isLoding}
           />
         </>
       )}
