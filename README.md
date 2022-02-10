@@ -119,6 +119,16 @@ https://reactnative.dev/docs/alert
 
 https://expo.dev/@gitcoder-23/employee-crud-app
 
+# for Avatar can be used
+
+https://www.npmjs.com/package/react-native-user-avatar
+
+# Picture problem solution
+
+# Trouble solving 'source.uri should not be an empty string' in React Native
+
+https://stackify.dev/619192-trouble-solving-source-uri-should-not-be-an-empty-string-in-react-native
+
 #
 
 start -> 25

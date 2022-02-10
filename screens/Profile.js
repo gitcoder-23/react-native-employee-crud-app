@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Title, Card, Button } from 'react-native-paper';
+import { Title, Card, Button, Avatar } from 'react-native-paper';
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
 import axios from 'axios';
 
@@ -19,6 +19,7 @@ const Profile = (props) => {
   const { _id, name, email, picture, phone, salary, position } =
     props.route.params.item;
   // console.log('_id->', _id);
+  console.log('picture->', picture);
   const openDial = () => {
     if (Platform.OS === 'android') {
       Linking.openURL(`tel: ${phone}`);
@@ -98,17 +99,35 @@ const Profile = (props) => {
         />
         {showBox && <View style={styles.box}></View>}
         <View style={{ alignItems: 'center' }}>
-          <Image
-            style={{
-              width: 140,
-              height: 140,
-              borderRadius: 140 / 2,
-              marginTop: -50,
-            }}
-            source={{
-              uri: `${picture}`,
-            }}
-          />
+          {picture == '' ? (
+            <>
+              <Avatar.Text
+                style={{
+                  width: 140,
+                  height: 140,
+                  borderRadius: 140 / 2,
+                  marginTop: -50,
+                }}
+                size={70}
+                label={name}
+              />
+            </>
+          ) : (
+            <>
+              <Image
+                style={{
+                  width: 140,
+                  height: 140,
+                  borderRadius: 140 / 2,
+                  marginTop: -50,
+                }}
+                source={picture ? { uri: picture } : null}
+                // source={{
+                //   uri: `${picture}`,
+                // }}
+              />
+            </>
+          )}
         </View>
         <View style={styles.empName}>
           <Title>{name}</Title>

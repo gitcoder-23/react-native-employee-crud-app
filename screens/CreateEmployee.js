@@ -73,7 +73,7 @@ const CreateEmployee = (props) => {
         navigation.navigate('Home');
       })
       .catch((err) => {
-        Alert.alert(`Something went wrong ${err}`);
+        Alert.alert(`Something went wrong`);
         console.log(err);
       });
   };
@@ -174,8 +174,8 @@ const CreateEmployee = (props) => {
         setModal(false);
       })
       .catch((err) => {
-        Alert.alert(`Error while uploading ${err}`);
-        // console.log(err);
+        Alert.alert(`Error while uploading`);
+        console.log(err);
       });
   };
 
@@ -207,7 +207,7 @@ const CreateEmployee = (props) => {
         navigation.navigate('Home');
       })
       .catch((err) => {
-        Alert.alert(`Something went wrong ${err}`);
+        Alert.alert(`Something went wrong`);
         console.log(err);
       });
   };

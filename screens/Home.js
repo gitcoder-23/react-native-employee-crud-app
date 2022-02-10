@@ -9,7 +9,7 @@ import {
   Alert,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { Card, FAB } from 'react-native-paper';
+import { Card, FAB, Avatar } from 'react-native-paper';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -47,12 +47,18 @@ const Home = (props) => {
           onPress={() => navigation.navigate('Profile', { item: item })}
         >
           <View style={styles.cardView}>
-            <Image
-              style={{ width: 60, height: 60, borderRadius: 60 / 2 }}
-              source={{
-                uri: `${item.picture}`,
-              }}
-            />
+            {item.picture === '' ? (
+              <Avatar.Text size={60} label={item.name} />
+            ) : (
+              <Image
+                style={{ width: 60, height: 60, borderRadius: 60 / 2 }}
+                // source={{
+                //   uri: item.picture,
+                // }}
+                source={item.picture ? { uri: item.picture } : null}
+              />
+            )}
+
             <View style={{ marginLeft: 20 }}>
               <Text style={styles.text}>{item.name}</Text>
               <Text style={styles.text}>{item.position}</Text>
@@ -67,6 +73,7 @@ const Home = (props) => {
       {/* it provides scrollview */}
       {loading ? (
         <>
+          {/* size={24} */}
           <ActivityIndicator size="large" color="#0000ff" />
         </>
       ) : (
